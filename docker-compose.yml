@@ -1,0 +1,15 @@
+# Optional: run the LibraryGuard dashboard in a container.
+# Usage: docker compose up --build
+services:
+  libraryguard:
+    build: .
+    ports:
+      - "8501:8501"
+    volumes:
+      # Mount local folders so processed outputs persist on the host.
+      # NEVER mount personal CCTV footage into a shared/public deployment.
+      - ./outputs:/app/outputs
+      - ./data:/app/data
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped

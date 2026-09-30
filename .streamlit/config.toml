@@ -1,0 +1,16 @@
+# Streamlit configuration for LibraryGuard
+[server]
+maxUploadSize = 500        # MB — CCTV clips can be large
+enableCORS = true
+enableXsrfProtection = true
+
+[browser]
+gatherUsageStats = false   # no telemetry
+
+[theme]
+base = "dark"
+primaryColor = "#4FC3F7"
+backgroundColor = "#12121a"
+secondaryBackgroundColor = "#1e1e2e"
+textColor = "#eceff1"
+font = "sans serif"

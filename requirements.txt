@@ -1,0 +1,22 @@
+# LibraryGuard - Python dependencies
+# Python 3.10 - 3.13 supported.
+
+# --- Core ML / computer vision ---
+torch>=2.1.0
+torchvision>=0.16.0
+ultralytics>=8.0.0          # YOLOv8 detection + pose (models auto-download on first use)
+opencv-python>=4.8.0
+numpy>=1.24.0
+scipy>=1.10.0               # Hungarian assignment in the tracker
+
+# --- Data / reporting ---
+pandas>=2.0.0
+PyYAML>=6.0
+matplotlib>=3.7.0           # evaluation plots
+
+# --- Web dashboard ---
+streamlit>=1.28.0
+
+# --- Testing ---
+pytest>=7.4.0
+pytest-cov>=4.1.0

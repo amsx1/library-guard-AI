@@ -1,0 +1,111 @@
+# LibraryGuard Configuration
+# All adjustable settings for the detection system
+
+# Model Configuration
+models:
+  person_detector:
+    name: "yolov8n"  # YOLOv8 nano for speed on CPU
+    confidence_threshold: 0.5
+    device: "auto"  # auto, cpu, cuda, mps
+  
+  object_detector:
+    name: "yolov8n"
+    confidence_threshold: 0.4
+    device: "auto"
+    # Classes of interest: bottle, cup, cell phone, book, laptop
+    target_classes: [39, 41, 67, 73, 63]  # COCO class IDs
+  
+  pose_estimator:
+    name: "yolov8n-pose"
+    confidence_threshold: 0.5
+    device: "auto"
+
+# Tracking Configuration
+tracking:
+  tracker: "bytetrack"  # bytetrack, botsort
+  max_age: 30
+  min_hits: 3
+  iou_threshold: 0.3
+  max_det_per_frame: 100
+
+# Behavior Detection Thresholds
+behavior:
+  drinking:
+    enabled: true
+    min_duration_seconds: 1.5
+    confidence_threshold: 0.6
+    cooldown_seconds: 5.0
+    # Temporal consistency requirements
+    min_consecutive_frames: 5
+    hand_to_mouth_distance_threshold: 0.15  # Normalized to person bbox
+    object_near_face_threshold: 0.2
+  
+  sleeping:
+    enabled: true
+    min_duration_seconds: 10.0
+    confidence_threshold: 0.65
+    cooldown_seconds: 15.0
+    min_consecutive_frames: 30
+    # Pose-based criteria
+    head_down_angle_threshold: 45  # degrees from vertical
+    low_movement_threshold: 0.02  # Normalized movement per frame
+    eye_closed_threshold: 0.3  # If pose includes eye landmarks
+  
+  phone_usage:
+    enabled: true
+    min_duration_seconds: 2.0
+    confidence_threshold: 0.6
+    cooldown_seconds: 5.0
+    min_consecutive_frames: 8
+    phone_near_hand_threshold: 0.15
+    phone_near_face_threshold: 0.25
+    looking_down_angle_threshold: 30
+
+# Global Detection Settings
+detection:
+  global_confidence_threshold: 0.5
+  frame_skip: 1  # Process every N frames (1 = all frames)
+  max_frames: null  # null = process all frames
+  input_resize: null  # [width, height] or null for original
+
+# Video Processing
+video:
+  output_codec: "mp4v"
+  output_fps: null  # null = same as input
+  draw_bboxes: true
+  draw_tracking_ids: true
+  draw_behavior_labels: true
+  draw_confidence: true
+  draw_timestamp: true
+  font_scale: 0.6
+  line_thickness: 2
+
+# Event Reporting
+reporting:
+  event_cooldown_seconds: 5.0
+  min_event_duration_seconds: 1.0
+  output_formats: ["json", "csv"]
+  include_snapshots: false
+  snapshot_interval_seconds: 1.0
+
+# Inference Performance
+performance:
+  batch_size: 1
+  half_precision: false  # FP16 inference
+  num_threads: 4
+  enable_tensorrt: false
+
+# Privacy Settings
+privacy:
+  blur_faces: true
+  blur_license_plates: false
+  store_raw_video: false
+  anonymize_tracking_ids: true
+
+# Paths
+paths:
+  models_dir: "models"
+  data_dir: "data"
+  output_dir: "outputs"
+  logs_dir: "logs"
+  temp_dir: "temp"
